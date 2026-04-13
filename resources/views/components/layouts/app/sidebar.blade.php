@@ -13,7 +13,8 @@
 
             <flux:navlist variant="outline">
                 <flux:navlist.group heading="Platform" class="grid">
-                    <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Dashboard</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('owners.index')" :current="request()->routeIs('owners.*')" wire:navigate>Savininkai</flux:navlist.item>
+                    <flux:navlist.item icon="truck" :href="route('cars.index')" :current="request()->routeIs('cars.*')" wire:navigate>Automobiliai</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 
