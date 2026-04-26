@@ -5,16 +5,18 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\CarController;
 
+Route::resource('cars', CarController::class)->middleware('auth');
+
+Route::middleware('admin')->group(function () {
+    Route::resource('cars', CarController::class)
+        ->only(['create', 'store', 'edit', 'update', 'destroy']);
+});
+
 Route::resource('owners', OwnerController::class);
 
 Route::get('/', function () {
     return redirect()->route('owners.index');
 })->name('home');
-
-Route::resource('cars', CarController::class);
-
-
-Route::resource('owners', OwnerController::class)->middleware('auth');
 
 Route::get('/dashboard', function() {
     return redirect()->route('owners.index');

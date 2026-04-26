@@ -8,6 +8,7 @@ use App\Models\Owner;
 
 class CarController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */

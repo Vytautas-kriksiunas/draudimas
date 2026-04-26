@@ -13,7 +13,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
-
+    public string $privilege = 'user';
     /**
      * Handle an incoming registration request.
      */
@@ -23,6 +23,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'privilege' => ['required', 'in:user,admin'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -78,6 +79,13 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 autocomplete="new-password"
                 placeholder="Confirm password"
             />
+        </div>
+        <!-- Privilege -->
+        <div class="grid gap-2">
+            <flux:select wire:model="privilege" label="{{ __('Role') }}">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </flux:select>
         </div>
 
         <div class="flex items-center justify-end">
