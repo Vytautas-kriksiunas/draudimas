@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'editO'=>'edit owner',
+    'editC'=>'edit car',
+    'Olist'=>'Owner list',
+    'Clist'=>'Car list',
+    'owners' => 'Owners',
+    'cars' => 'Cars',
+    'add_owner' => 'Add new owner',
+    'add_car' => 'Add new car',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'save' => 'Save',
+    'back' => 'Back',
+    'update' => 'Update',
+    'name' => 'Name',
+    'surname' => 'Surname',
+    'phone' => 'Phone',
+    'email' => 'Email',
+    'address' => 'Address',
+    'actions' => 'Actions',
+    'reg_number' => 'Reg. number',
+    'brand' => 'Brand',
+    'model' => 'Model',
+    'owner' => 'Owner',
+];

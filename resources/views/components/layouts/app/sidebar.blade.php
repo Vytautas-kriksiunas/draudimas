@@ -11,10 +11,15 @@
                 <x-app-logo class="size-8" href="#"></x-app-logo>
             </a>
 
+            <div class="flex gap-2 p-2">
+                <a href="/lang/lt" class="bg-green-500 text-white px-3 py-1 rounded text-sm">LT</a>
+                <a href="/lang/en" class="bg-green-500 text-white px-3 py-1 rounded text-sm">EN</a>
+            </div>
+
             <flux:navlist variant="outline">
                 <flux:navlist.group heading="Platform" class="grid">
-                    <flux:navlist.item icon="users" :href="route('owners.index')" :current="request()->routeIs('owners.*')" wire:navigate>Savininkai</flux:navlist.item>
-                    <flux:navlist.item icon="truck" :href="route('cars.index')" :current="request()->routeIs('cars.*')" wire:navigate>Automobiliai</flux:navlist.item>
+                    <flux:navlist.item icon="users" :href="route('owners.index')" :current="request()->routeIs('owners.*')" wire:navigate>{{__('site.owners')}}</flux:navlist.item>
+                    <flux:navlist.item icon="truck" :href="route('cars.index')" :current="request()->routeIs('cars.*')" wire:navigate>{{__('site.cars')}}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

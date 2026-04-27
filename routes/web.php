@@ -12,6 +12,11 @@ Route::middleware('admin')->group(function () {
         ->only(['create', 'store', 'edit', 'update', 'destroy']);
 });
 
+Route::get('/lang/{locale}', function ($locale) {
+    session(['locale' => $locale]);
+    return redirect('/');
+});
+
 Route::resource('owners', OwnerController::class);
 
 Route::get('/', function () {

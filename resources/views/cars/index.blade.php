@@ -1,20 +1,20 @@
 
 <x-layouts.app>
     <div class="p-6">
-        <h1 class="text-2xl font-bold mb-4">Automobilių sąrašas</h1>
+        <h1 class="text-2xl font-bold mb-4">{{ __('site.Clist') }}</h1>
 
         <a href="{{ route('cars.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
-Pridėti naują automobilį
+            {{ __('site.add_car') }}
 </a>
 
         <table class="w-full mt-4 border">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="p-2 border">Reg. numeris</th>
-                    <th class="p-2 border">Markė</th>
-                    <th class="p-2 border">Modelis</th>
-                    <th class="p-2 border">Savininkas</th>
-                    <th class="p-2 border">Veiksmai</th>
+                    <th class="p-2 border">{{ __('site.reg_number') }}</th>
+                    <th class="p-2 border">{{ __('site.brand') }}</th>
+                    <th class="p-2 border">{{ __('site.model') }}</th>
+                    <th class="p-2 border">{{ __('site.owner') }}</th>
+                    <th class="p-2 border">{{ __('site.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
