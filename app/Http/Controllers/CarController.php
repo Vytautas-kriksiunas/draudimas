@@ -6,6 +6,7 @@ use App\Models\Car;
 use Illuminate\Http\Request;
 use App\Models\Owner;
 use App\Http\Requests\CarRequest;
+use App\Models\CarPhoto;
 
 class CarController extends Controller
 {
@@ -30,9 +31,23 @@ class CarController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CarRequest $request )
+    public function store(CarRequest $request)
     {
-        Car::create($request->all());
+        $car = Car::create($request->all());
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $filename = $photo->hashName();
+                // Naudojame move(), kad failas atsirastų tiesiai public kataloge
+                $photo->move(public_path('photos/carphotos'), $filename);
+
+                CarPhoto::create([
+                    'car_id' => $car->id,
+                    'filename' => $filename,
+                ]);
+            }
+        }
+
         return redirect()->route('cars.index');
     }
 
@@ -59,6 +74,19 @@ class CarController extends Controller
     public function update(CarRequest $request, Car $car)
     {
         $car->update($request->all());
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $photo) {
+                $filename = $photo->hashName();
+                $photo->move(public_path('photos/carphotos'), $filename);
+
+                CarPhoto::create([
+                    'car_id' => $car->id,
+                    'filename' => $filename,
+                ]);
+            }
+        }
+
         return redirect()->route('cars.index');
     }
 
@@ -67,7 +95,30 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        // Ištriname fizinius nuotraukų failus iš public katalogo prieš ištrinant automobilį
+        foreach ($car->photos as $photo) {
+            $filePath = public_path('photos/carphotos/' . $photo->filename);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            $photo->delete();
+        }
+
         $car->delete();
         return redirect()->route('cars.index');
     }
+
+
+    public function destroyPhoto(CarPhoto $photo)
+    {
+        if ($photo->filename != null) {
+            $filePath = public_path('photos/carphotos/' . $photo->filename);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+            $photo->delete();
+        }
+        return redirect()->back();
+    }
+
 }

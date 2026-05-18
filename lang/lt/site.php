@@ -36,4 +36,5 @@ return [
     'brand_required' => 'Markė yra privaloma',
     'model_required' => 'Modelis yra privalomas',
     'owner_required' => 'Savininkas yra privalomas',
+    'photos' => 'Nuotraukos'
 ];

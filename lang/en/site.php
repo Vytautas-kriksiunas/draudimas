@@ -37,4 +37,6 @@ return [
     'brand_required' => 'Brand is required',
     'model_required' => 'Model is required',
     'owner_required' => 'Owner is required',
+    'photos' => 'Photos'
+
 ];

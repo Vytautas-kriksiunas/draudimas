@@ -5,6 +5,13 @@ use Livewire\Volt\Volt;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\CarController;
 
+// Nuotraukos ištrynimo maršrutas
+Route::get('/photos/{photo}/destroy', [CarController::class, 'destroyPhoto'])->name('photos.destroy');
+
+// Jūsų standartinis automobilių resource maršrutas (jei dar nėra)
+Route::resource('cars', CarController::class);
+
+
 Route::resource('cars', CarController::class)->middleware('auth');
 
 Route::middleware('admin')->group(function () {
