@@ -17,7 +17,7 @@ class CarSeeder extends Seeder
         foreach (Owner::all() as $owner) {
             for ($i = rand(1, 3); $i > 0; $i--) {
                 Car::create([
-                    'reg_number' => fake()->bothify('???-###'),
+                    'reg_number' => strtoupper(fake()->bothify('???###')),
                     'brand' => fake()->randomElement(['Toyota', 'BMW', 'Audi', 'Honda', 'Ford']),
                     'model' => fake()->randomElement(['Corolla', 'X5', 'A4', 'Civic', 'Focus']),
                     'owner_id' => $owner->id,
