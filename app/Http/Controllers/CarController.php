@@ -7,16 +7,26 @@ use Illuminate\Http\Request;
 use App\Models\Owner;
 use App\Http\Requests\CarRequest;
 use App\Models\CarPhoto;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class CarController extends Controller
 {
-
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $cars = Car::all();
+        $user = auth()->user();
+
+        if ($user->privilege === 'admin' || $user->privilege === 'reader') {
+            $cars = Car::all();
+        } else {
+            $cars = Car::whereHas('owner', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->get();
+        }
+
         return view('cars.index', compact('cars'));
     }
 
@@ -25,6 +35,7 @@ class CarController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Car::class);
         $owners = Owner::all();
         return view('cars.create', compact('owners'));
     }
@@ -64,6 +75,7 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
+        $this->authorize('update', $car);
         $owners = Owner::all();
         return view('cars.edit', compact('car','owners'));
     }
@@ -73,6 +85,7 @@ class CarController extends Controller
      */
     public function update(CarRequest $request, Car $car)
     {
+        $this->authorize('update', $car);
         $car->update($request->all());
 
         if ($request->hasFile('photos')) {
@@ -95,6 +108,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        $this->authorize('delete', $car);
         // Ištriname fizinius nuotraukų failus iš public katalogo prieš ištrinant automobilį
         foreach ($car->photos as $photo) {
             $filePath = public_path('photos/carphotos/' . $photo->filename);

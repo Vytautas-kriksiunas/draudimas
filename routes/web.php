@@ -14,11 +14,6 @@ Route::resource('cars', CarController::class);
 
 Route::resource('cars', CarController::class)->middleware('auth');
 
-Route::middleware('admin')->group(function () {
-    Route::resource('cars', CarController::class)
-        ->only(['create', 'store', 'edit', 'update', 'destroy']);
-});
-
 Route::get('/lang/{locale}', function ($locale) {
     session(['locale' => $locale]);
     return redirect('/');
@@ -41,5 +36,7 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
+
+Route::resource('owners', OwnerController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';

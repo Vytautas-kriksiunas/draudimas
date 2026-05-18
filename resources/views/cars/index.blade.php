@@ -34,12 +34,17 @@
         <td class="p-2 border">{{ $car->model }}</td>
         <td class="p-2 border">{{ $car->owner->name }} {{ $car->owner->surname }}</td>
         <td class="p-2 border">
-            <a href="{{ route('cars.edit', $car) }}" class="bg-yellow-500 text-white px-2 py-1 rounded">Redaguoti</a>
-            <form action="{{ route('cars.destroy', $car) }}" method="POST" style="display:inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded">Ištrinti</button>
-            </form>
+            @can('update', $car)
+                <a href="{{ route('cars.edit', $car) }}" class="bg-yellow-500 text-white px-2 py-1 rounded inline-block text-sm">{{ __('site.edit') }}</a>
+            @endcan
+
+            @can('delete', $car)
+                <form action="{{ route('cars.destroy', $car) }}" method="POST" style="display:inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded inline-block text-sm">{{ __('site.delete') }}</button>
+                </form>
+            @endcan
         </td>
     </tr>
     @endforeach

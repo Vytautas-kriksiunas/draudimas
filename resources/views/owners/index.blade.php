@@ -25,12 +25,16 @@
         <td class="p-2 border">{{ $owner->email }}</td>
         <td class="p-2 border">{{ $owner->address }}</td>
         <td class="p-2 border">
-            <a href="{{ route('owners.edit', $owner) }}" class="bg-yellow-500 text-white px-2 py-1 rounded">{{ __('site.update') }}</a>
-            <form action="{{ route('owners.destroy', $owner) }}" method="POST" style="display:inline">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded" >{{ __('site.delete') }}</button>
-            </form>
+            @can('update', $owner)
+                <a href="{{ route('owners.edit', $owner) }}" class="bg-yellow-500 text-white px-2 py-1 rounded inline-block text-sm">{{ __('site.edit') }}</a>
+            @endcan
+                @can('delete', $owner)
+                    <form action="{{ route('owners.destroy', $owner) }}" method="POST" style="display:inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded inline-block text-sm">{{ __('site.delete') }}</button>
+                    </form>
+                @endcan
         </td>
     </tr>
     @endforeach
